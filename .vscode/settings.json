@@ -1,0 +1,10 @@
+{
+    "sqltools.connections": [
+        {
+            "database": "C:\\Work\\Git\\angular-auth-demo\\backend\\authentication-data.db",
+            "dialect": "SQLite",
+            "name": "AuthenticationDB"
+        }
+    ],
+    "sqltools.useNodeRuntime": true
+}
