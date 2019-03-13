@@ -1,4 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json'
+  })
+};
 
 @Component({
   selector: 'app-register',
@@ -7,11 +14,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegisterComponent implements OnInit {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
+  // const serverURL =
   ngOnInit() {
   }
   register(form) {
-    console.log(form.value);
+    this.http.post('http://localhost:3008/register', form.value, httpOptions)
+    .subscribe(
+      response => {
+        console.log(response);
+      },
+      () => console.log('Authentication Complete'));
   }
 }
