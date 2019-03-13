@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Client } from '../models/client';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-client',
@@ -15,6 +17,7 @@ export class ClientComponent {
     movie: '',
     phone: ''
   };
+  public client: Client = new Client;
 
   public genres = [
     { type: 'Action' , movies: ['The Matrix', 'Kill Bill: Vol.1', 'The Dark Knight Rises']},
@@ -38,5 +41,10 @@ export class ClientComponent {
 
   public onTimeSelection(event) {
     this.user.dateTime.setTime((event.newValue as Date).getTime());
+  }
+
+  addClient(client: NgForm) {
+    const cl = client.value as Client;
+    console.log(client.value);
   }
 }

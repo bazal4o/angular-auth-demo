@@ -28,6 +28,20 @@ const  createUsersTable  = () => {
     return  database.run(sqlQuery);
 }
 
+const createClientsTable = () => {
+    const  sqlQuery  =  `
+        CREATE TABLE IF NOT EXISTS clients (
+        id integer PRIMARY KEY,
+        firstName text,
+        lastName text,
+        email text UNIQUE,
+        password text,
+        phone number,
+        facebook string)`;
+
+    return  database.run(sqlQuery);
+}
+
 const  findUserByEmail  = (email, cb) => {
     return  database.get(`SELECT * FROM users WHERE email = ?`,[email], (err, row) => {
             cb(err, row)
@@ -41,11 +55,18 @@ const  createUser  = (user, cb) => {
 }
 
 createUsersTable();
-
+createClientsTable();
 router.get('/', (req, res) => {
     res.status(200).send('This is an authentication server. Status OK');
 });
-
+router.post('/addclient', (req, res) => {
+    // Validation required
+    console.log(req.body);
+    return res.status(200); 
+    // const  firstName  =  req.body.firstName;
+    // const  lastName = req.body.lastName;
+    // const  email  =  req.body.email;
+});
 router.post('/register', (req, res) => {
 
     const  firstName  =  req.body.firstName;
