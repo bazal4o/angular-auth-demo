@@ -1,0 +1,38 @@
+{
+    "igPackageRegistry": "https://packages.infragistics.com/npm/js-licensed/",
+    "customTemplates": [
+        "path:C:\\Work\\Git\\cli-custom-templates\\comand\\my-awesome-grid",
+        "path:C:\\Work\\Git\\cli-custom-templates\\comand\\my-custom-view",
+        "path:C:\\Work\\Git\\cli-custom-templates\\comand\\my-angular-view"
+    ],
+    "skipGit": "true",
+    "skipAnalytic": false,
+    "stepByStep": {
+        "frameworks": [
+            "angular"
+        ],
+        "angular": {
+            "projTypes": [
+                "igx-ts"
+            ]
+        }
+    },
+    "version": "4.1.0",
+    "project": {
+        "defaultPort": "4210",
+        "framework": "angular",
+        "projectType": "igx-ts",
+        "projectTemplate": "side-nav-auth",
+        "theme": "Default",
+        "themePath": "$(themePath)",
+        "isBundle": false,
+        "bundleFilePath": "",
+        "igniteuiSource": "",
+        "components": [],
+        "sourceFiles": [],
+        "isShowcase": false,
+        "version": ""
+    },
+    "build": {},
+    "packagesInstalled": true
+}
