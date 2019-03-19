@@ -5,13 +5,13 @@ import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './error-routing/not-found/not-found.component';
 import { UncaughtErrorComponent } from './error-routing/error/uncaught-error.component';
 import { ErrorRoutingModule } from './error-routing/error-routing.module';
-import { ClientComponent } from './client/client.component';
+import { CustomerComponent } from './customer/customer.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent, data: { text: 'Home' } },
   { path: 'error', component: UncaughtErrorComponent },
-  { path: 'client', component: ClientComponent, data: { text: 'client' } },
+  { path: 'client', component: CustomerComponent, data: { text: 'client' } },
   { path: '**', component: PageNotFoundComponent } // must always be last
 ];
 

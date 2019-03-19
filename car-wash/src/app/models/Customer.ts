@@ -1,4 +1,4 @@
-export class Client {
+export class Customer {
     id: number;
     firstName: string;
     lastName: string;
@@ -6,4 +6,5 @@ export class Client {
     phone: number;
     facebook: string;
     registrationDate: Date;
+    password: string;
 }
