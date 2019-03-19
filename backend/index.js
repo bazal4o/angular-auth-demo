@@ -38,7 +38,6 @@ const createClientsTable = () => {
         password text,
         phone number,
         facebook string)`;
-
     return  database.run(sqlQuery);
 }
 
@@ -54,18 +53,41 @@ const  createUser  = (user, cb) => {
     });
 }
 
+const createClient = (client, cb) => {
+    return database.run('INSERT INTO clients (firstName, lastName, phone, email, facebook, password ) VALUES (?,?,?,?,?,?)',
+    client, (res, err) => {
+        cb(err)
+    })
+}
+const dropClientsTable = () => {
+    const  sqlQuery  =  `DROP TABLE clients`;
+    return  database.run(sqlQuery, (res, err) => {
+        if (err) {
+            console.log(err.message);
+        }
+    })
+}
 createUsersTable();
 createClientsTable();
+// dropClientsTable();
 router.get('/', (req, res) => {
     res.status(200).send('This is an authentication server. Status OK');
 });
 router.post('/addclient', (req, res) => {
     // Validation required
     console.log(req.body);
-    return res.status(200); 
-    // const  firstName  =  req.body.firstName;
-    // const  lastName = req.body.lastName;
-    // const  email  =  req.body.email;
+    const  firstName  =  req.body.firstName;
+    const  lastName = req.body.lastName;
+    const  email  =  req.body.email;
+    const phone = req.body.phone;
+    const  password  =  bcrypt.hashSync(req.body.password);
+    createClient([firstName, lastName, phone, email, "", password], (err)=> {
+        if(err) { 
+            return  res.status(500).send("Server error: " + err.message );
+        } else {
+            return res.send(200, `Client registered`);
+        }
+    })
 });
 router.post('/register', (req, res) => {
 

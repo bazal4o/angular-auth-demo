@@ -8,7 +8,9 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "program": "${workspaceFolder}\\backend\\index.js"
+            "console": "externalTerminal",
+            "program": "${workspaceFolder}\\backend\\index.js",
+            "cwd": "${workspaceRoot}\\backend",
         }
     ]
 }
