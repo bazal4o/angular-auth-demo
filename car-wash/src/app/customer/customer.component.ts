@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { Customer } from '../models/Customer';
 import { NgForm } from '@angular/forms';
-import { HttpHeaders, HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
+import { CustomersService } from '../shared/customers.service';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -17,18 +18,16 @@ const httpOptions = {
 export class CustomerComponent {
 
   public customer: Customer = new Customer();
-  constructor(private http: HttpClient) { }
+  constructor(protected customerService: CustomersService) { }
   addClient(clientForm: NgForm) {
-
-      this.http.post('http://localhost:3008/addclient', clientForm.value)
-      .subscribe(response => {
+      this.customerService.registerCustomer(clientForm.value as Customer)
+      .subscribe(
+        response => {
           console.log(response);
-        },
-        (error: HttpErrorResponse) => console.log('Client Registration Failed: ' + error.error),
-        () => {
-          console.log('Server has registered the client');
           this.customer = new Customer();
-        }
+        },
+        err => console.log('error'),
+        () => console.log('done')
       );
   }
 }
