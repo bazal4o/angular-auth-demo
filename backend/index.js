@@ -40,6 +40,61 @@ const createCustomersTable = () => {
         facebook string)`;
     return  database.run(sqlQuery);
 }
+const createOrdersTable = () => {
+    const  sqlQuery  =  `
+        CREATE TABLE IF NOT EXISTS orders (
+        id integer PRIMARY KEY,
+        status integer NOT NULL, 
+        customer_id integer NOT NULL,
+            FOREIGN KEY (customer_id) REFERENCES customers(id))`;
+    return  database.run(sqlQuery);
+}
+
+const createOrderDetailsTable = () => {
+    const  sqlQuery  =  `
+        CREATE TABLE IF NOT EXISTS order_details (
+        id integer PRIMARY KEY,
+        order_id integer NOT NULL references orders(id),
+        product_id integer NOT NULL references products(id))`;
+    return  database.run(sqlQuery, (err) => {
+        if (err) {
+            console.log(err);
+        }
+    });
+}
+
+const createProductsTable = () => {
+    let  sqlQuery  =  `
+    CREATE TABLE IF NOT EXISTS products (
+    id integer PRIMARY KEY,
+    name text UNIQUE,
+    price number,
+    description text)`;
+    database.run(sqlQuery, (err) => {
+        if (err) {
+            console.log(err);
+        }
+    }); 
+
+}
+const feedProducts = () => {
+    let products = [];
+    const product1 = ["Full wash", 25, "This is full car wash"];
+    const product2 = ["Inside wash", 20, "This is inside car wash only"];
+    const product3 = ["Outside wash", 15, "This is outside car wash Only"];
+    products.push(product1);
+    products.push(product2);
+    products.push(product3); 
+    for (let index = 0; index < products.length; index++) {
+        const element = products[index];
+        const sqlQuery = `INSERT INTO products (name, price, description) VALUES (?,?,?)`;
+        database.run(sqlQuery, element, function(err) {
+            if (err) {
+                console.log(err);
+            }
+        });
+    }
+}
 
 const  findCustomerByEmail  = (email, cb) => {
     return  database.get(`SELECT * FROM customers WHERE email = ?`,[email], (err, row) => {
@@ -61,7 +116,6 @@ const  createUser  = (user, cb) => {
 }
 
 const createCustomer = (customer, cb) => {
-    const self = this;
     return database.run('INSERT INTO customers (firstName, lastName, phone, email, facebook, password ) VALUES (?,?,?,?,?,?)',
     customer, function(err) {
         if (err) {
@@ -79,8 +133,8 @@ const getCustomers = (cb) => {
         cb(err, customers);
     })
 }
-const dropCustomersTable = () => {
-    const  sqlQuery  =  `DROP TABLE customers`;
+const dropTable = (table) => {
+    const  sqlQuery  =  `DROP TABLE ${table}`;
     return  database.run(sqlQuery, (res, err) => {
         if (err) {
             console.log(err.message);
@@ -88,8 +142,12 @@ const dropCustomersTable = () => {
     })
 }
 // createUsersTable();
-createCustomersTable();
-// dropCustomersTable();
+// createCustomersTable();
+// dropTable('orders');
+//createProductsTable();
+createOrdersTable();
+createOrderDetailsTable();
+// feedProducts();
 router.get('/', (req, res) => {
     res.status(200).send('This is an authentication server. Status OK');
 });
