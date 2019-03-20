@@ -1,10 +1,6 @@
 {
     "igPackageRegistry": "https://packages.infragistics.com/npm/js-licensed/",
-    "customTemplates": [
-        "path:C:\\Work\\Git\\cli-custom-templates\\comand\\my-awesome-grid",
-        "path:C:\\Work\\Git\\cli-custom-templates\\comand\\my-custom-view",
-        "path:C:\\Work\\Git\\cli-custom-templates\\comand\\my-angular-view"
-    ],
+    "customTemplates": [ ],
     "skipGit": "true",
     "skipAnalytic": false,
     "stepByStep": {

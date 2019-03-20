@@ -6,12 +6,15 @@ import { PageNotFoundComponent } from './error-routing/not-found/not-found.compo
 import { UncaughtErrorComponent } from './error-routing/error/uncaught-error.component';
 import { ErrorRoutingModule } from './error-routing/error-routing.module';
 import { CustomerComponent } from './customer/customer.component';
+import { CustomersViewComponent } from './customers-view/customers-view.component';
+
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent, data: { text: 'Home' } },
   { path: 'error', component: UncaughtErrorComponent },
   { path: 'client', component: CustomerComponent, data: { text: 'client' } },
+  { path: 'customers-view', component: CustomersViewComponent, data: { text: 'customers-view' } },
   { path: '**', component: PageNotFoundComponent } // must always be last
 ];
 
