@@ -1,0 +1,39 @@
+:host {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.sample-wrapper {
+    border-radius: 5px;
+    box-shadow: 0 1.5px 0 0 rgba(0,0,0,0.1);
+    width:409px;
+    display: flex;  
+    flex-direction: column;
+  }
+.input-group-form{
+    border: 2px solid #731963;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 10px;
+}
+.sample-title {
+    color: #731963;
+    margin-bottom: 24px;
+}
+.sample-title .light {
+    font-weight: 400;
+}
+
+.igx-input-group, .component-container {
+	margin-top: 32px;
+}
+button{
+    background-color:#731963;
+    border-color:#731963;
+    color: white;
+}
+.description-container {
+    width: 70%;
+    display: flex;
+    align-self: center;
+}

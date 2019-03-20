@@ -28,24 +28,81 @@ const  createUsersTable  = () => {
     return  database.run(sqlQuery);
 }
 
-const  findUserByEmail  = (email, cb) => {
-    return  database.get(`SELECT * FROM users WHERE email = ?`,[email], (err, row) => {
+const createCustomersTable = () => {
+    const  sqlQuery  =  `
+        CREATE TABLE IF NOT EXISTS customers (
+        id integer PRIMARY KEY,
+        firstName text,
+        lastName text,
+        email text UNIQUE,
+        password text,
+        phone number,
+        facebook string)`;
+    return  database.run(sqlQuery);
+}
+
+const  findCustomerByEmail  = (email, cb) => {
+    return  database.get(`SELECT * FROM customers WHERE email = ?`,[email], (err, row) => {
+            cb(err, row)
+    });
+}
+
+const findCustomerById = (id, cb) => {
+    return database.get(`SELECT * FROM customers WHERE id = ?`,[id], (err, row) => {
             cb(err, row)
     });
 }
 
 const  createUser  = (user, cb) => {
     return  database.run('INSERT INTO users (firstName, lastName, email, password) VALUES (?,?,?,?)',user, (err) => {
+        //callback for whatever reason
         cb(err)
     });
 }
 
-createUsersTable();
-
+const createCustomer = (customer, cb) => {
+    const self = this;
+    return database.run('INSERT INTO customers (firstName, lastName, phone, email, facebook, password ) VALUES (?,?,?,?,?,?)',
+    customer, function(err) {
+        if (err) {
+            cb(err.message);
+        } else {
+            findCustomerById(this.lastID, (err, user) => {
+                cb(err, {"lastId": this.lastID, "user": user});
+            });
+        }
+    });
+}
+const dropCustomersTable = () => {
+    const  sqlQuery  =  `DROP TABLE customers`;
+    return  database.run(sqlQuery, (res, err) => {
+        if (err) {
+            console.log(err.message);
+        }
+    })
+}
+// createUsersTable();
+createCustomersTable();
+// dropCustomersTable();
 router.get('/', (req, res) => {
     res.status(200).send('This is an authentication server. Status OK');
 });
-
+router.post('/registerCustomer', (req, res) => {
+    // Validation required
+    
+    const firstName  =  req.body.firstName;
+    const lastName = req.body.lastName;
+    const email  =  req.body.email;
+    const phone = req.body.phone;
+    const password  =  bcrypt.hashSync(req.body.password)
+    createCustomer([firstName, lastName, phone, email, "", password], (err, response)=> {
+        if(err) { 
+            return  res.status(500).send("Server error: " + err.message );
+        } else { 
+            return res.status(200).send(response);
+        }
+    })
+});
 router.post('/register', (req, res) => {
 
     const  firstName  =  req.body.firstName;
@@ -56,7 +113,7 @@ router.post('/register', (req, res) => {
 
     createUser([firstName, lastName, email, password], (err)=>{
         if(err) return  res.status(500).send("Server error!");
-        findUserByEmail(email, (err, user)=>{
+        findCustomerByEmail(email, (err, user)=>{
             if (err) return  res.status(500).send('Server error!');  
             const  expiresIn  =  24  *  60  *  60;
             const  accessToken  =  jwt.sign({ id:  user.id }, SECRET_KEY, {
@@ -72,7 +129,7 @@ router.post('/register', (req, res) => {
 router.post('/login', (req, res) => {
     const  email  =  req.body.email;
     const  password  =  req.body.password;
-    findUserByEmail(email, (err, user)=>{
+    findCustomerByEmail(email, (err, user)=>{
         if (err) return  res.status(500).send('Server error!');
         if (!user) return  res.status(404).send('User not found!');
         const  result  =  bcrypt.compareSync(password, user.password);

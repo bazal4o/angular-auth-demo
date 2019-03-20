@@ -1,0 +1,49 @@
+<div class="sample-wrapper">
+    <section class="sample-content">
+        <article class="sample-column">
+            <form #addClientForm="ngForm"  class="input-group-form" (ngSubmit)="addClient(addClientForm)">
+                <h4 class="sample-title">Register new customer</h4>
+                <igx-input-group>
+                    <input igxInput name="firstName" type="text" [(ngModel)]="customer.firstName" required="required" />
+                    <label igxLabel for="firstName">First Name</label>
+                    <igx-suffix>
+                        <igx-icon>person</igx-icon>
+                    </igx-suffix>
+                </igx-input-group>
+                <igx-input-group>
+                    <input igxInput name="lastName" type="text" [(ngModel)]="customer.lastName" required="required" />
+                    <label igxLabel for="lastName">Last Name</label>
+                    <igx-suffix>
+                        <igx-icon>person</igx-icon>
+                    </igx-suffix>
+                </igx-input-group>
+                <igx-input-group>
+                    <igx-prefix>+359</igx-prefix>
+                    <label igxLabel for="phone">Phone</label>
+                    <input igxInput name="phone" type="number" [(ngModel)]="customer.phone" />
+                    <igx-suffix>
+                        <igx-icon>phone</igx-icon>
+                    </igx-suffix>
+                    <igx-hint position="start">Ex.: +359 888 123 456</igx-hint>
+                </igx-input-group>
+                <igx-input-group>
+                    <label igxLabel for="email">Email address</label>
+                    <input igxInput name="email" type="email" [(ngModel)]="customer.email" required />
+                    <igx-suffix>
+                        <igx-icon>email</igx-icon>
+                    </igx-suffix>
+                </igx-input-group>
+                <igx-input-group>
+                    <label igxLabel for="password">Password</label>
+                    <input igxInput name="password" type="password" [(ngModel)]="customer.password" required />
+                    <igx-suffix>
+                        <igx-icon>lock</igx-icon>
+                    </igx-suffix>
+                </igx-input-group>
+                <div class="component-container">
+                    <button igxButton="raised" igxRipple>Register</button>
+                </div>
+            </form>
+        </article>
+    </section>
+</div>
