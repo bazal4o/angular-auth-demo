@@ -3,21 +3,21 @@ import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { IgxLayoutModule, IgxRippleModule, IgxNavigationDrawerModule, IgxNavbarModule,
-  IgxButtonModule, IgxComboModule, IgxDatePickerModule, IgxIconModule, IgxInputGroupModule,
-  IgxTimePickerModule, IgxSelectModule } from 'igniteui-angular';
+import { IgxLayoutModule, IgxRippleModule, IgxNavigationDrawerModule, IgxNavbarModule, IgxButtonModule, IgxComboModule, IgxDatePickerModule, IgxIconModule, IgxInputGroupModule, IgxTimePickerModule, IgxSelectModule, IgxGridModule, IgxCheckboxModule } from 'igniteui-angular';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthenticationModule, ExternalAuthService } from './authentication';
 import { CustomerComponent } from './customer/customer.component';
+import { CustomersViewComponent } from './customers-view/customers-view.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    CustomerComponent
+    CustomerComponent,
+    CustomersViewComponent
   ],
   imports: [
     FormsModule,
@@ -36,7 +36,9 @@ import { CustomerComponent } from './customer/customer.component';
     IgxIconModule,
     IgxInputGroupModule,
     IgxTimePickerModule,
-    IgxSelectModule
+    IgxSelectModule,
+    IgxGridModule,
+    IgxCheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent]

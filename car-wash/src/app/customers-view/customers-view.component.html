@@ -1,0 +1,24 @@
+<h3>Customers Data</h3>
+
+<div class="customer-grid-wrapper">
+  <igx-grid #grid1 [data]="localData" [primaryKey]="'id'" width="900px" height="550px" [rowSelectable]="true" [paging]="true" [perPage]="50">
+    <igx-column field="firstName" header="First Name"  width="25%" [sortable]="true" >
+    </igx-column>
+    <igx-column field="lastName" header="Last Name" width="25%" [sortable]="true" >
+    </igx-column>
+    <igx-column field="email" width="30%" [sortable]="true">
+    </igx-column>
+    <igx-column field="phone" width="20%" dataType="number">
+    </igx-column>
+    <!-- <igx-column field="RegistererDate" header="Registerer Date" width="180px" dataType="date" [sortable]="true">
+      <ng-template igxCell let-value>
+          {{ value | date }}
+      </ng-template>
+    </igx-column> -->
+      <!-- <igx-column field="IsActive" header="Is Active" width="140px" dataType="boolean" [sortable]="true">
+      <ng-template igxCell let-cell="cell">
+        <igx-checkbox [checked]="cell.value" [disabled]="true"></igx-checkbox>
+      </ng-template>
+    </igx-column> -->
+  </igx-grid>
+</div>

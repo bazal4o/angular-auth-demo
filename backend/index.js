@@ -73,6 +73,12 @@ const createCustomer = (customer, cb) => {
         }
     });
 }
+
+const getCustomers = (cb) => {
+    return database.all(`SELECT id, firstName, lastName, email, phone FROM customers`, (err, customers) => {
+        cb(err, customers);
+    })
+}
 const dropCustomersTable = () => {
     const  sqlQuery  =  `DROP TABLE customers`;
     return  database.run(sqlQuery, (res, err) => {
@@ -87,6 +93,17 @@ createCustomersTable();
 router.get('/', (req, res) => {
     res.status(200).send('This is an authentication server. Status OK');
 });
+router.get('/customers', (req, res) => {
+       getCustomers((err, response) => {
+        if (err) {
+            res.status(500).send("Server error: " + err.message );
+        } else {
+            res.status(200).send(response);
+        }
+       });
+    } 
+);
+
 router.post('/registerCustomer', (req, res) => {
     // Validation required
     
