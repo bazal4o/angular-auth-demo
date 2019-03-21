@@ -3,7 +3,10 @@ import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { IgxLayoutModule, IgxRippleModule, IgxNavigationDrawerModule, IgxNavbarModule, IgxButtonModule, IgxComboModule, IgxDatePickerModule, IgxIconModule, IgxInputGroupModule, IgxTimePickerModule, IgxSelectModule, IgxGridModule, IgxCheckboxModule } from 'igniteui-angular';
+import { IgxLayoutModule, IgxRippleModule, IgxNavigationDrawerModule,
+  IgxNavbarModule, IgxButtonModule, IgxComboModule, IgxDatePickerModule,
+  IgxIconModule, IgxInputGroupModule, IgxTimePickerModule, IgxSelectModule,
+  IgxGridModule, IgxCheckboxModule, IgxCalendarModule, IgxDialogModule } from 'igniteui-angular';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -11,13 +14,17 @@ import { AppRoutingModule } from './app-routing.module';
 import { AuthenticationModule, ExternalAuthService } from './authentication';
 import { CustomerComponent } from './customer/customer.component';
 import { CustomersViewComponent } from './customers-view/customers-view.component';
+import { RegisterCarComponent, FilterByLetterPipe } from './register-car/register-car.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     CustomerComponent,
-    CustomersViewComponent
+    CustomersViewComponent,
+    FilterByLetterPipe,
+    RegisterCarComponent
   ],
   imports: [
     FormsModule,
@@ -38,7 +45,9 @@ import { CustomersViewComponent } from './customers-view/customers-view.componen
     IgxTimePickerModule,
     IgxSelectModule,
     IgxGridModule,
-    IgxCheckboxModule
+    IgxCheckboxModule,
+    IgxCalendarModule,
+    IgxDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

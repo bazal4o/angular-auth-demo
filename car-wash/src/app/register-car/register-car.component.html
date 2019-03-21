@@ -1,0 +1,63 @@
+
+<div class="sample-wrapper">
+    <section class="sample-content">
+        <article class="sample-column">
+            <form class="input-group-form">
+				<h4 class="sample-title">New Car</h4>
+				<div class="component-container">
+                    <igx-select #select name="movies" [(ngModel)]="car.make" (onSelection)='makeSelected($event)'>
+                        <igx-select-item-group *ngFor="let group of remoteMakeGroups" [label]="group">
+                            <igx-select-item *ngFor="let make of remoteMakes | filterByLetter:group" [value]="make.id">
+                                {{ make.name }}
+                            </igx-select-item>
+                        </igx-select-item-group>
+                        <label igxLabel for="movies">Make</label>
+                        <ng-template igxSelectToggleIcon><igx-icon fontSet="material">local_car_wash</igx-icon></ng-template>
+                    </igx-select>
+                </div>
+                <div class="component-container">
+                    <igx-select #select name="movies" [disabled]="disableModels" [(ngModel)]="car.model">
+                        
+                            <igx-select-item *ngFor="let model of carModels" [value]="model">
+                                {{ model.name }}
+                            </igx-select-item>
+                        <label igxLabel for="movies">Model</label>
+                        <ng-template igxSelectToggleIcon><igx-icon fontSet="material">local_car_wash</igx-icon></ng-template>
+                    </igx-select>
+                </div>
+                <igx-input-group>
+                    <input igxInput name="registrationPlate" type="text" [(ngModel)]="car.registrationPlate" required="required" />
+                    <label igxLabel for="registrationPlate">Registration Plate</label>
+                    <igx-suffix>
+                        <igx-icon>person</igx-icon>
+                    </igx-suffix>
+                </igx-input-group>
+                
+                <div class="component-container">
+					<igx-combo #combo1 name="genres" class="input-container" width="100%" [itemsMaxHeight]="130" 
+						[data]="genres" [valueKey]="'type'" [displayKey]="'type'" [(ngModel)]="user.genres"
+                        placeholder="Choose Client" searchPlaceholder="Search..." required [type]='"line"'>
+                    </igx-combo>
+                </div>
+                <div class="component-container">
+                    <igx-input-group (click)="openYearDialog()">
+                            <igx-prefix>
+                                <igx-icon>favorite</igx-icon>
+                            </igx-prefix>
+                            <label igxLabel>Year</label>
+                            <input igxInput name='car.year' [value]="yearFormater(car.fullYear)" />
+                            <igx-suffix>
+                                <igx-icon>today</igx-icon>
+                            </igx-suffix>
+                        </igx-input-group>
+                        <igx-dialog #yearPickerDialog [closeOnOutsideSelect]="true">
+                            <igx-years-view name="car.fullYear" [(ngModel)]="car.fullYear" (onSelection)='closeYearDialog()'></igx-years-view>
+                    </igx-dialog>
+                </div>
+                <div class="component-container">
+                    <button igxButton="raised" igxRipple>Register Car</button>
+                </div>
+            </form>
+        </article>
+    </section>
+</div>

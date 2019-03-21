@@ -2,10 +2,12 @@
 const  express  =  require('express');
 const  bodyParser  =  require('body-parser');
 const cors = require('cors')
+const https = require('https');
 
 const  sqlite3  =  require('sqlite3').verbose();
 const  jwt  =  require('jsonwebtoken');
 const  bcrypt  =  require('bcryptjs');
+
 
 const SECRET_KEY = "secretkey23456";
 
@@ -44,11 +46,17 @@ const createOrdersTable = () => {
     const  sqlQuery  =  `
         CREATE TABLE IF NOT EXISTS orders (
         id integer PRIMARY KEY,
-        status integer NOT NULL, 
-        customer_id integer NOT NULL,
-            FOREIGN KEY (customer_id) REFERENCES customers(id))`;
-    return  database.run(sqlQuery);
+        status integer NOT NULL,
+        car_id integer NOT NULL REFERENCES cars(id),
+        customer_id integer NOT NULL REFERENCES customers(id))`;
+    return  database.run(sqlQuery, (err) => {
+        if (err) {
+            console.log(err);
+        }
+    });
 }
+
+
 
 const createOrderDetailsTable = () => {
     const  sqlQuery  =  `
@@ -62,6 +70,33 @@ const createOrderDetailsTable = () => {
         }
     });
 }
+const createCarTypeTable = () => {
+    const  sqlQuery  =  `
+    CREATE TABLE IF NOT EXISTS car_type (
+    id integer PRIMARY KEY,
+    name text UNIQUE)`;
+    return  database.run(sqlQuery, (err) => {
+        if (err) {
+            console.log(err);
+        }
+    });
+}
+const createCarsTable = () => {
+    const  sqlQuery  =  `
+        CREATE TABLE IF NOT EXISTS cars (
+        id integer PRIMARY KEY,
+        model text,
+        make text, 
+        registration_plate text NOT NULL, 
+        type int references car_type(id),
+        year text)`;
+    return  database.run(sqlQuery, (err) => {
+        if (err) {
+            console.log(err);
+        }
+    });
+}
+
 
 const createProductsTable = () => {
     let  sqlQuery  =  `
@@ -146,7 +181,9 @@ const dropTable = (table) => {
 // dropTable('orders');
 //createProductsTable();
 createOrdersTable();
-createOrderDetailsTable();
+createCarsTable();
+createCarTypeTable();
+// createOrderDetailsTable();
 // feedProducts();
 router.get('/', (req, res) => {
     res.status(200).send('This is an authentication server. Status OK');
@@ -161,6 +198,36 @@ router.get('/customers', (req, res) => {
        });
     } 
 );
+
+router.get('/makes', (req, res) => {
+    https.get('https://www.carqueryapi.com/api/0.3/?cmd=getMakes', (resp) => {
+        let data = '';
+        resp.on('data', (chunk) => {
+            data += chunk;
+        });
+        resp.on('end', () => {
+            res.status(200).send(JSON.parse(data));
+        });
+    
+    }).on("error",(err) => {
+        res.status(500).send("Server error: " + err.message );
+    });
+});
+
+router.get('/models/:id', (req, res) => {
+    const make_id = req.params.id;
+    https.get('https://www.carqueryapi.com/api/0.3/?cmd=getModels&make=' + make_id, (resp) => {
+        let data = '';
+        resp.on('data', (chunk) => {
+            data += chunk;
+        });
+        resp.on('end', () => {
+            res.status(200).send(JSON.parse(data));
+        });
+    }).on("error",(err) => {
+        res.status(500).send("Server error: " + err.message );
+    });
+});
 
 router.post('/registerCustomer', (req, res) => {
     // Validation required
