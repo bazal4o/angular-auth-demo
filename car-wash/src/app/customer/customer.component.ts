@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Customer } from '../models/Customer';
 import { NgForm } from '@angular/forms';
-import { HttpHeaders } from '@angular/common/http';
 import { CustomersService } from '../shared/customers.service';
 import { Router } from '@angular/router';
 
@@ -17,8 +16,7 @@ export class CustomerComponent {
       this.customerService.registerCustomer(clientForm.value as Customer)
       .subscribe(
         response => {
-          // console.log(response);
-          // this.customer = new Customer();
+          console.log(response);
           this.router.navigate(['customers-view']);
         },
         err => console.log('error'),

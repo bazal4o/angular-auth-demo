@@ -89,7 +89,7 @@ const createCarsTable = () => {
         make text, 
         registration_plate text NOT NULL, 
         type int references car_type(id),
-        year text)`;
+        year int)`;
     return  database.run(sqlQuery, (err) => {
         if (err) {
             console.log(err);
@@ -109,9 +109,10 @@ const createProductsTable = () => {
         if (err) {
             console.log(err);
         }
-    }); 
-
+    });
 }
+
+
 const feedProducts = () => {
     let products = [];
     const product1 = ["Full wash", 25, "This is full car wash"];
@@ -131,6 +132,19 @@ const feedProducts = () => {
     }
 }
 
+const feedCarTypes = () => {
+    let types = ['Small Car', 'Car', 'SUV', 'Mini Van', 'Caravan'];
+    for (let index = 0; index < types.length; index++) {
+        const element = types[index];
+        const sqlQuery = `INSERT INTO car_type (name) VALUES (?)`;
+        database.run(sqlQuery, element, function(err) {
+            if (err) {
+                console.log(err);
+            }
+        });
+    }
+}
+
 const  findCustomerByEmail  = (email, cb) => {
     return  database.get(`SELECT * FROM customers WHERE email = ?`,[email], (err, row) => {
             cb(err, row)
@@ -141,6 +155,12 @@ const findCustomerById = (id, cb) => {
     return database.get(`SELECT * FROM customers WHERE id = ?`,[id], (err, row) => {
             cb(err, row)
     });
+}
+
+const findCarById = (id, cb) => {
+    return database.get(`select * from cars where id = ?`, [id], (err, row) => {
+        cb(err, row);
+    })
 }
 
 const  createUser  = (user, cb) => {
@@ -163,9 +183,33 @@ const createCustomer = (customer, cb) => {
     });
 }
 
+const registerCar = (car, cb) => {
+    return database.run('INSERT into  cars (make, model, registration_plate, type, year) VALUES (?, ?, ?, ?, ?)', 
+    car, function(err) {
+        if (err) {
+            cb(err.message);
+        } else {
+            findCarById(this.lastID, (err, car) => {
+                cb(err, {lastID: this.lastID, "car": car});
+            })
+        }
+    });
+}
+
 const getCustomers = (cb) => {
     return database.all(`SELECT id, firstName, lastName, email, phone FROM customers`, (err, customers) => {
         cb(err, customers);
+    })
+}
+
+const getRegisteredCars = (cb) => {
+    return database.all(`SELECT * FROM cars`, (err, cars) => {
+        cb(err, cars)
+    })
+}
+const getCarTypes = (cb) => {
+    return database.all(`select * from car_type`, (err, types) => {
+        cb(err, types);
     })
 }
 const dropTable = (table) => {
@@ -178,13 +222,13 @@ const dropTable = (table) => {
 }
 // createUsersTable();
 // createCustomersTable();
-// dropTable('orders');
+// dropTable('cars');
 //createProductsTable();
-createOrdersTable();
-createCarsTable();
-createCarTypeTable();
 // createOrderDetailsTable();
 // feedProducts();
+// createCarTypeTable();
+ //feedCarTypes();
+// createCarsTable();
 router.get('/', (req, res) => {
     res.status(200).send('This is an authentication server. Status OK');
 });
@@ -196,7 +240,7 @@ router.get('/customers', (req, res) => {
             res.status(200).send(response);
         }
        });
-    } 
+    }
 );
 
 router.get('/makes', (req, res) => {
@@ -214,6 +258,16 @@ router.get('/makes', (req, res) => {
     });
 });
 
+router.get('/carTypes', (req, res) => {
+    getCarTypes((err, response) => {
+        if (err) {
+            res.status(500).send("Server error: " + err.message );
+        } else {
+            res.status(200).send(response);
+        }
+    })
+});
+
 router.get('/models/:id', (req, res) => {
     const make_id = req.params.id;
     https.get('https://www.carqueryapi.com/api/0.3/?cmd=getModels&make=' + make_id, (resp) => {
@@ -228,6 +282,30 @@ router.get('/models/:id', (req, res) => {
         res.status(500).send("Server error: " + err.message );
     });
 });
+router.post('/registerCar', (req, res) => {
+    const make = req.body.make;
+    const model = req.body.model.name;
+    const registrationPlate = req.body.registrationPlate;
+    const carType = req.body.carType;
+    const year = req.body.year;
+    registerCar([make, model, registrationPlate, carType, year], (err, response) => {
+        if(err) { 
+            return  res.status(500).send("Server error: " + err.message );
+        } else { 
+            return res.status(200).send(response);
+        }
+    });    
+});
+
+router.get('/registeredCars', (req, res) => {
+    getRegisteredCars((err, response) => {
+        if (err) {
+            return res.status(500).send("Server error: " + err.message);
+        } else {
+            return res.status(200).send(response);
+        }
+    })
+})
 
 router.post('/registerCustomer', (req, res) => {
     // Validation required
