@@ -1,0 +1,24 @@
+<p>Registered Cars </p>
+<igx-grid #grid1 [data]="registeredCars" [primaryKey]="'id'" width="900px" height="550px" [rowSelectable]="true">
+  <igx-column field="make" header="Make"  width="25%" [sortable]="true" [filterable]="true" >
+  </igx-column>
+  <igx-column field="model" header="Model" width="25%" [sortable]="true" [filterable]="true" >
+  </igx-column>
+  <igx-column field="registration_plate" header="Reg. Plate" width="20%" [sortable]="true" [filterable]="true" >
+  </igx-column>
+  <igx-column field="type" header="Car Type" width="15%" [sortable]="true" [filterable]="true" >
+  </igx-column>
+  <igx-column field="year" header="Year" width="15%" [sortable]="true" [filterable]="true">  
+
+  </igx-column>
+  <!-- <igx-column field="RegistererDate" header="Registerer Date" width="180px" dataType="date" [sortable]="true" [filterable]="true">
+    <ng-template igxCell let-value>
+        {{ value | date }}
+    </ng-template>
+  </igx-column>
+    <igx-column field="IsActive" header="Is Active" width="140px" dataType="boolean" [sortable]="true" [filterable]="true">
+    <ng-template igxCell let-cell="cell">
+      <igx-checkbox [checked]="cell.value" [disabled]="true"></igx-checkbox>
+    </ng-template>
+  </igx-column> -->
+</igx-grid>
