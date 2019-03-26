@@ -1,0 +1,69 @@
+
+<div class="sample-wrapper">
+    <section class="sample-content">
+        <article class="sample-column">
+            <form #registerCarForm="ngForm" class="input-group-form" (ngSubmit)='registerCarForm.valid && registerCar(registerCarForm)' novalidate>
+				<h4 class="sample-title">New Car</h4>
+				<div class="component-container">
+                    <igx-select #select name="make" [(ngModel)]="car.make" (onSelection)='makeSelected($event)'>
+                        <igx-select-item-group *ngFor="let group of remoteMakeGroups" [label]="group">
+                            <igx-select-item *ngFor="let make of remoteMakes | filterByLetter:group" [value]="make.id">
+                                {{ make.name }}
+                            </igx-select-item>
+                        </igx-select-item-group>
+                        <label igxLabel for="make">Make</label>
+                        <ng-template igxSelectToggleIcon><igx-icon fontSet="material">local_car_wash</igx-icon></ng-template>
+                    </igx-select>
+                </div>
+                <div class="component-container">
+                    <igx-select #select name="model" [disabled]="disableModels" [(ngModel)]="car.model">
+                        
+                            <igx-select-item *ngFor="let model of carModels" [value]="model">
+                                {{ model.name }}
+                            </igx-select-item>
+                        <label igxLabel for="model">Model</label>
+                        <ng-template igxSelectToggleIcon><igx-icon fontSet="material">local_taxi</igx-icon></ng-template>
+                    </igx-select>
+                </div>
+                <igx-input-group>
+                    <input igxInput name="registrationPlate" type="text" [(ngModel)]="car.registrationPlate" required="required" />
+                    <label igxLabel for="registrationPlate">Registration Plate</label>
+                    <igx-suffix>
+                        <igx-icon>info</igx-icon>
+                    </igx-suffix>
+                </igx-input-group>
+                
+                <div class="component-container">
+                    <igx-select #select name="carType" [(ngModel)]="car.carType">
+                            <igx-select-item *ngFor="let ct of carTypes" [value]='ct.id'>
+                                {{ ct.name }}
+                            </igx-select-item>
+                        <label igxLabel for="car.carType">Car Type</label>
+                    </igx-select>
+					<!-- <igx-combo #combo1 class="input-container" width="100%" [itemsMaxHeight]="130" 
+						[data]='carTypes' [valueKey]="'type'" [displayKey]="'type'"
+                        placeholder="Choose Client" searchPlaceholder="Search..." required [type]='"line"'>
+                    </igx-combo> -->
+                </div>
+                <div class="component-container">
+                    <igx-input-group (click)="openYearDialog()">
+                            <igx-prefix>
+                                <igx-icon>time_to_leave</igx-icon>
+                            </igx-prefix>
+                            <label igxLabel for="year">Year of Production</label>
+                            <input igxInput readonly type="text" autocomplete="off" name="year" [(ngModel)]="car.year" />
+                            <igx-suffix>
+                                <igx-icon>today</igx-icon>
+                            </igx-suffix>
+                            <igx-dialog #yearPickerDialog [closeOnOutsideSelect]="true">
+                                <igx-years-view name="fullYear" [(ngModel)]="fullYear" (ngModelChange)='yearFormatter($event)' (onSelection)='closeYearDialog()'></igx-years-view>
+                            </igx-dialog>
+                    </igx-input-group>
+                </div>
+                <div class="component-container">
+                    <button igxButton="raised" igxRipple>Register Car</button>
+                </div>
+            </form>
+        </article>
+    </section>
+</div>

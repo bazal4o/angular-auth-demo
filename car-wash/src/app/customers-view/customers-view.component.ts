@@ -8,7 +8,7 @@ import { CustomersViewModel } from '../models/Customer';
   styleUrls: ['./customers-view.component.scss']
 })
 export class CustomersViewComponent implements OnInit {
-  public localData: any[];
+  public localData: CustomersViewModel[];
   title = 'customers-view';
   constructor(private customerService: CustomersService) { }
 
