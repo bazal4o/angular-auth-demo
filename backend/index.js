@@ -202,6 +202,14 @@ const getCustomers = (cb) => {
     })
 }
 
+const getCarByCustomerId = (id, cb) => {
+    id = isNaN(id) ? "" : parseInt(id, 10);
+    return database.get(`Select * from cars where id in (select car_id from customer_car where customer_id == ?)  `, [id], 
+    (err, row) => {
+        cb(err, row);
+    });
+}
+
 const getRegisteredCars = (cb) => {
     return database.all(`SELECT * FROM cars`, (err, cars) => {
         cb(err, cars)
@@ -281,6 +289,22 @@ router.get('/models/:id', (req, res) => {
     }).on("error",(err) => {
         res.status(500).send("Server error: " + err.message );
     });
+});
+
+router.get('/getCarByCustomerId', (req, res) => {
+    const customer_id = req.query.id;
+    if (!customer_id) {
+        return res.status(400).send("Missing id in query");
+    }
+    getCarByCustomerId([customer_id], (err, response) => {
+        if(err) { 
+            return  res.status(500).send("Server error: " + err.message );
+        } 
+        if (response) { 
+            return res.status(200).send(response);
+        }
+        return res.status(404).send("Record not found");
+    })
 });
 router.post('/registerCar', (req, res) => {
     const make = req.body.make;
