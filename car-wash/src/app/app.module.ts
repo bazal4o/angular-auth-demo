@@ -16,7 +16,6 @@ import { RegisteredCarsComponent } from './registered-cars/registered-cars.compo
 import { WashPackagesComponent } from './wash-packages/wash-packages.component';
 import { RegisterOrderComponent } from './register-order/register-order.component';
 import { CustomerfilteringPipe } from './register-order/customerfiltering.pipe';
-import { FirstnamelastnamePipe } from './register-order/firstnamelastname.pipe';
 
 @NgModule({
     declarations: [
@@ -29,8 +28,7 @@ import { FirstnamelastnamePipe } from './register-order/firstnamelastname.pipe';
         RegisteredCarsComponent,
         WashPackagesComponent,
         RegisterOrderComponent,
-        CustomerfilteringPipe,
-        FirstnamelastnamePipe
+        CustomerfilteringPipe
     ],
     imports: [
         FormsModule,
