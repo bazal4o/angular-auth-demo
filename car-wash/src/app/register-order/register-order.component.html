@@ -1,0 +1,61 @@
+<h2>Register new order</h2>
+<div class="sample-wrapper">
+    <section class="sample-content">
+        <article class="sample-column">
+            <form class="input-group-form">
+                <igx-input-group>
+                        <input igxInput #customerInput name="customer" type="text"  [igxAutocomplete]='customersDD' 
+                        [value]="customer.fullName" (onItemSelected)='clientSelected($event)'/>
+                        <input type="hidden" name="customerId" [value]='customer ? customer.id : ""'/>
+                        <label igxLabel for="customer">Customer Name</label>
+                        <igx-suffix>
+                            <igx-icon>person</igx-icon>
+                        </igx-suffix>
+                </igx-input-group>
+                <igx-drop-down #customersDD [maxHeight]="'250px'">
+                    <igx-drop-down-item *ngFor="let customer of registeredCustomers | customerfiltering: customerInput.value" [value]='customer.id'>
+                        {{customer.firstName}} {{customer.lastName}}
+                    </igx-drop-down-item>
+                </igx-drop-down>
+                <igx-input-group>
+                    <input igxInput name="registrationPlate" autocomplete="off" type="text" [(ngModel)]="order.registrationPlate" required="required" />
+                    <label igxLabel for="fullName">Registration Plate</label>
+                    <igx-suffix>
+                        <igx-icon>person</igx-icon>
+                    </igx-suffix>
+                </igx-input-group>
+                <div class="component-container">
+                    <igx-select #packageSelect name="packageSelect" [(ngModel)]="selectedPackage" required>
+                        <label igxLabel for="packageSelect">Wash Package</label>
+                        <igx-select-item *ngFor="let package of packages" [value]="package">
+                            {{package.name}}
+                        </igx-select-item>
+                    </igx-select>
+                </div>
+                <div class="component-container">
+                    <igx-select #statusSelect name="status" class="input-container" >
+                        <igx-select-item [value]="0" [isSelected]='true'>In Review</igx-select-item>
+                        <igx-select-item [value]="1">In Progress</igx-select-item>
+                        <igx-select-item [value]="2">Awaiting Customer</igx-select-item>
+                        <igx-select-item [value]="3">Completed</igx-select-item>
+                    </igx-select>
+                </div>
+                <div class="component-container">
+					<igx-combo #combo1 name="genres" class="input-container" width="100%" [itemsMaxHeight]="130" 
+						[data]="genres" [valueKey]="'type'" [displayKey]="'type'" [(ngModel)]="user.genres"
+                        placeholder="Extra services" searchPlaceholder="Search..." required [type]='"line"'>
+                    </igx-combo>
+                </div>
+                <div class="component-container">
+                    <igx-date-picker name="date" (onSelection)="onDateSelection($event)"></igx-date-picker>
+                </div>
+                <div class="component-container">
+                    <igx-time-picker name="dateTime" (onValueChanged)="onTimeSelection($event)"></igx-time-picker>
+                </div>
+                <div class="component-container">
+                    <button igxButton="raised" igxRipple>Create Order</button>
+                </div>
+            </form>
+        </article>
+    </section>
+</div>

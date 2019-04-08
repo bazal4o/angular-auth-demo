@@ -1,0 +1,15 @@
+<h2>Wash Packages</h2>
+<div class="content-wrapper">
+  <igx-card class="package-card" *ngFor='let item of items'>
+      <igx-card-header>
+        <h3 class="igx-card-header__title">{{ item.name }}</h3>
+        <h5 class="igx-card-header__subtitle">{{item.price}} лв.</h5>
+      </igx-card-header>
+      <igx-card-content>
+        <p class="igx-card-content__text"> {{item.description}}</p>
+      </igx-card-content>
+      <igx-card-actions>
+          <button igxButton igxRipple (click)='createOrderFromPackage(item.id)'>Create order</button>
+      </igx-card-actions>
+    </igx-card>
+</div>

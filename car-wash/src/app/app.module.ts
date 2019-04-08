@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { IgxLayoutModule, IgxRippleModule, IgxNavigationDrawerModule, IgxNavbarModule, IgxButtonModule, IgxComboModule, IgxDatePickerModule, IgxIconModule, IgxInputGroupModule, IgxTimePickerModule, IgxSelectModule, IgxGridModule, IgxCheckboxModule, IgxCalendarModule, IgxDialogModule } from 'igniteui-angular';
+import { IgxLayoutModule, IgxRippleModule, IgxNavigationDrawerModule, IgxNavbarModule, IgxButtonModule, IgxComboModule, IgxDatePickerModule, IgxIconModule, IgxInputGroupModule, IgxTimePickerModule, IgxSelectModule, IgxGridModule, IgxCheckboxModule, IgxCalendarModule, IgxDialogModule, IgxCardModule, IgxAutocompleteModule } from 'igniteui-angular';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -13,6 +13,10 @@ import { CustomerComponent } from './customer/customer.component';
 import { CustomersViewComponent } from './customers-view/customers-view.component';
 import { RegisterCarComponent, FilterByLetterPipe } from './register-car/register-car.component';
 import { RegisteredCarsComponent } from './registered-cars/registered-cars.component';
+import { WashPackagesComponent } from './wash-packages/wash-packages.component';
+import { RegisterOrderComponent } from './register-order/register-order.component';
+import { CustomerfilteringPipe } from './register-order/customerfiltering.pipe';
+import { FirstnamelastnamePipe } from './register-order/firstnamelastname.pipe';
 
 @NgModule({
     declarations: [
@@ -22,7 +26,11 @@ import { RegisteredCarsComponent } from './registered-cars/registered-cars.compo
         CustomersViewComponent,
         FilterByLetterPipe,
         RegisterCarComponent,
-        RegisteredCarsComponent
+        RegisteredCarsComponent,
+        WashPackagesComponent,
+        RegisterOrderComponent,
+        CustomerfilteringPipe,
+        FirstnamelastnamePipe
     ],
     imports: [
         FormsModule,
@@ -32,10 +40,12 @@ import { RegisteredCarsComponent } from './registered-cars/registered-cars.compo
         AuthenticationModule,
         AppRoutingModule,
         IgxNavigationDrawerModule,
+        IgxAutocompleteModule,
         IgxNavbarModule,
         IgxLayoutModule,
         IgxRippleModule,
         IgxButtonModule,
+        IgxCardModule,
         IgxComboModule,
         IgxDatePickerModule,
         IgxIconModule,

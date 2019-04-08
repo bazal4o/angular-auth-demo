@@ -3,19 +3,18 @@ import { IgxDialogComponent } from 'igniteui-angular';
 import { CarMake, CarModel, Car, CarType } from '../models/Cars';
 import { CarService } from '../shared/car.service';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register-car',
   templateUrl: './register-car.component.html',
   styleUrls: ['./register-car.component.scss']
 })
-
-
 export class RegisterCarComponent implements OnInit {
   /**
    *
    */
-  constructor(private carService: CarService) { }
+  constructor(private carService: CarService, private router: Router) { }
 
   @ViewChild('yearPickerDialog') public yearPickerDialog: IgxDialogComponent;
   @ViewChild('registerCarForm') public registerForm: NgForm;
@@ -79,6 +78,7 @@ export class RegisterCarComponent implements OnInit {
   registerCar(carModel: NgForm) {
     this.carService.registerCar(carModel.value as Car).subscribe((res) => {
       console.log(res);
+      this.router.navigate(['registered-cars']);
     },
     (err) => console.log(err)
      );
