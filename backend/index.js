@@ -220,6 +220,11 @@ const getWashPackages = (cb) => {
         cb(err, packages)
     })
 }
+const getExtraServices = (cb) => {
+    return database.all(`SELECT * FROM services`, (err, services) => {
+        cb(err, services)
+    });
+};
 const getCarTypes = (cb) => {
     return database.all(`select * from car_type`, (err, types) => {
         cb(err, types);
@@ -345,6 +350,16 @@ router.get('/wash-packages', (req, res) => {
         }
     });
 });
+
+router.get('/extra-services', (req, res) => {
+    getExtraServices((err, response) => {
+        if (err) {
+            return res.status(500).send("Server error: " + err.message);
+        } else {
+            return res.status(200).send(response);
+        }
+    });
+})
 
 router.post('/registerCustomer', (req, res) => {
     // Validation required

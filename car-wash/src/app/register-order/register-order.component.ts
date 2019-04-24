@@ -8,6 +8,8 @@ import { Subscription } from 'rxjs';
 import { WashPackage } from '../models/wash-package';
 import { WashService } from '../shared/wash.service';
 import { IgxInputDirective } from 'igniteui-angular';
+import { ExtraService } from '../models/extra-service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-register-order',
@@ -25,7 +27,10 @@ export class RegisterOrderComponent implements OnInit, OnDestroy {
     packageID: this.packageID,
     carID: '',
     status: '',
-    orderCreationDate: ''
+    orderCreationDate: '',
+    extraServices: [],
+    orderDate: Date,
+    orderTimeSlot: Date
   };
 
   public customer = {
@@ -40,35 +45,10 @@ export class RegisterOrderComponent implements OnInit, OnDestroy {
     }
     return '';
   }
-  public user = {
-    dateTime: new Date(),
-    email: '',
-    fullName: '',
-    genres: '',
-    movie: '',
-    phone: ''
-  };
   public registeredCustomers: CustomersViewModel[] = [];
   public sub: Subscription;
   public packages: WashPackage[] = [];
-  public genres = [
-    { type: 'Action' , movies: ['The Matrix', 'Kill Bill: Vol.1', 'The Dark Knight Rises']},
-    { type: 'Adventure' , movies: ['Interstellar', 'Inglourious Basterds', 'Inception']},
-    // tslint:disable-next-line:object-literal-sort-keys
-    { type: 'Comedy' , movies: ['Wild Tales', 'In Bruges', 'Three Billboards Outside Ebbing, Missouri',
-         'Untouchable', '3 idiots']},
-    { type: 'Crime' , movies: ['Training Day', 'Heat', 'American Gangster']},
-    { type: 'Drama' , movies: ['Fight Club', 'A Beautiful Mind', 'Good Will Hunting', 'City of God']},
-    { type: 'Biography' , movies: ['Amadeus', 'Bohemian Rhapsody']},
-    { type: 'Mystery' , movies: ['The Prestige', 'Memento', 'Cloud Atlas']},
-    { type: 'Musical' , movies: ['All That Jazz']},
-    { type: 'Romance' , movies: ['Love Actually', 'In The Mood for Love']},
-    { type: 'Sci-Fi' , movies: ['The Fifth Element']},
-    { type: 'Thriller' , movies: ['The Usual Suspects']},
-    { type: 'Western' , movies: ['Django Unchained']}];
-  /**
-   *
-   */
+  public extraServices: ExtraService[] = [];
 
   @ViewChild('customerInput', {read: IgxInputDirective })
   public clientInput: IgxInputDirective;
@@ -80,11 +60,11 @@ export class RegisterOrderComponent implements OnInit, OnDestroy {
   }
 
   public onDateSelection(value) {
-    this.user.dateTime.setDate((value as Date).getDate());
+    // this.user.dateTime.setDate((value as Date).getDate());
   }
 
   public onTimeSelection(event) {
-    this.user.dateTime.setTime((event.newValue as Date).getTime());
+    // this.user.dateTime.setTime((event.newValue as Date).getTime());
   }
   public clientSelected(event: AutocompleteItemSelectionEventArgs) {
     if (!event.value) {
@@ -117,10 +97,22 @@ export class RegisterOrderComponent implements OnInit, OnDestroy {
         this.selectedPackage = this.packages.find(p => p.id === this.packageID);
       }
     });
+    this.washService.getServices().subscribe(res => {
+      this.extraServices = res;
+    });
   }
 
   ngOnDestroy(): void {
     this.sub.unsubscribe();
   }
 
+  registerOrder(orderModel: NgForm) {
+
+    // this.carService.registerCar(carModel.value as Car).subscribe((res) => {
+    //   console.log(res);
+    //   // this.router.navigate(['registered-cars']);
+    // },
+    // (err) => console.log(err)
+    //  );
+  }
 }

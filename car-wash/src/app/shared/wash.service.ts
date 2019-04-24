@@ -18,4 +18,7 @@ export class WashService {
   public getPackages(): Observable<any> {
     return this.http.get(this.url + 'wash-packages', httpOptions);
   }
+  public getServices(): Observable<any> {
+    return this.http.get(this.url + 'extra-services', httpOptions);
+  }
 }

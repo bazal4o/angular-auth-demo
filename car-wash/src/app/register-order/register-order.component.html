@@ -35,23 +35,23 @@
                 <div class="component-container">
                     <igx-select #statusSelect name="status" class="input-container" >
                         <igx-select-item [value]="0" [isSelected]='true'>In Review</igx-select-item>
-                        <igx-select-item [value]="1">In Progress</igx-select-item>
-                        <igx-select-item [value]="2">Awaiting Customer</igx-select-item>
-                        <igx-select-item [value]="3">Completed</igx-select-item>
+                        <igx-select-item [value]="1" [disabled]='true'>In Progress</igx-select-item>
+                        <igx-select-item [value]="2" [disabled]='true'>Awaiting Customer</igx-select-item>
+                        <igx-select-item [value]="3" [disabled]='true'>Completed</igx-select-item>
                     </igx-select>
                 </div>
                 <div class="component-container">
-					<igx-combo #combo1 name="genres" class="input-container" width="100%" [itemsMaxHeight]="130" 
-						[data]="genres" [valueKey]="'type'" [displayKey]="'type'" [(ngModel)]="user.genres"
-                        placeholder="Extra services" searchPlaceholder="Search..." required [type]='"line"'>
+					<igx-combo #combo1 name="services" class="input-container" width="100%" [itemsMaxHeight]="130" 
+						[data]="extraServices" [valueKey]="'id'" [displayKey]="'name'" [(ngModel)]="order.extraServices"
+                        placeholder="Extra services" searchPlaceholder="Search service" [type]='"line"'>
                     </igx-combo>
                 </div>
-                <div class="component-container">
-                    <igx-date-picker name="date" (onSelection)="onDateSelection($event)"></igx-date-picker>
+                <!-- <div class="component-container">
+                    <igx-date-picker name="orderDate" (onSelection)="onDateSelection($event)"></igx-date-picker>
                 </div>
                 <div class="component-container">
-                    <igx-time-picker name="dateTime" (onValueChanged)="onTimeSelection($event)"></igx-time-picker>
-                </div>
+                    <igx-time-picker name="orderTimeSlot" [(ngModel)]="order.orderTimeSlot"></igx-time-picker>
+                </div> -->
                 <div class="component-container">
                     <button igxButton="raised" igxRipple>Create Order</button>
                 </div>
